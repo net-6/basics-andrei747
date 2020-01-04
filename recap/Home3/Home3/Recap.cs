@@ -336,14 +336,13 @@ namespace Home3
                 int random = 0;
                 if (num == "ok")
                 {
-                    numberList.Add(random);
-                    List<int> number = numberList.ToList();
+                    int num2 = Convert.ToInt32(num[0]);
                     char[] ch = num.ToCharArray();
 
 
                     for (int i = 0; i < num.Length; i++)
                     {
-                        random = ch[i] + ch[i];
+                        random = num2 + num2;
                         Console.WriteLine(random);// stuck
                     }
 
@@ -394,8 +393,6 @@ namespace Home3
         public void Problem13()
         {
 
-
-
             for (int i = 0; i < 4; i++)
             {
 
@@ -431,19 +428,30 @@ namespace Home3
     {
         public void Problem14()
         {
+            var numbers = new int[100];
             
-            for (int i = 0; i < 5; i++)
-            {
-
-                Console.WriteLine("Type a series of numbers");
-                int num = int.Parse(Console.ReadLine());
-                int[] arr = { num };
-                Console.WriteLine("The max is: " + arr.Max());//stuck
-
-            }
-            
-
+           for(int i = 0; i < numbers.Length; i++)
+           {
+               Console.WriteLine("Type a series of numbers");
+                
+                var str = Console.ReadLine();
+                var num = str.Split(',');
+                int num2 = Convert.ToInt32(num[0]); //input not in correct format
+                //nu merge nu citeste n1, ramane zero...am incercat...aveam cu bool si fara convert
+                //am dat parse, am incercat cu convert si se blocheaza, 
+                //am incercat cu list<> ca la problem08 numai ca am pus .Max() si nici asa..a pai nu mai stiu
+                if (str == "ok")
+                {
+                    numbers[i] = num2;
+                    int[] arr = { numbers[i] };
+                    Console.WriteLine(arr.Max());                    
+                    break; 
+                }
+                                              
+           }
+                           
         }
+       
 
     }
 ////## Strings
@@ -452,7 +460,147 @@ namespace Home3
     /// if the numbers are consecutive. For example, if the input is "5-6-7-8-9" or "20-19-18-17-16", 
     /// display a message: "Consecutive"; otherwise, display "Not Consecutive".
     /// </summary>
-   
+    public class RecapProblem15
+    {
+        public void Problem15()
+        {
+            //luata de pe net
+            Console.WriteLine("Type a few numbers separated by hypens");
+            var num = Console.ReadLine();
+            var numArray = num.Split('-');
+            int values = Convert.ToInt32(numArray[0]);//nu inteleg
+            bool check = true;
+            for(var i = 0; i < numArray.Length; i++)
+            {
+                if(Convert.ToInt32(numArray[i]) + i  !=values && Convert.ToInt32(numArray[i]) - i !=values)//nu inteleg
+                {
+                    check = false;
+                    break;
+                }
+            }
+            if (check)
+            {
+                Console.WriteLine("Consecutive");
+            }
+            else
+            {
+                Console.WriteLine("Not Consecutive");
+            }
+        }
+
+
+    }
+    /// <summary>
+    /// Write a program and ask the user to enter a few numbers separated by a hyphen(minus). If the user simply 
+    /// presses Enter without supplying an input, exit immediately; otherwise, check to see if there are 
+    /// any duplicates. If so, display "Duplicate" on the console.
+    /// </summary>
+   /* public class RecapProblem16
+    {
+        public void Problem16()
+        {
+            var numbers = new List<int>();
+            Console.WriteLine("Write some numbers");
+            var str = Console.ReadLine();
+            var num = str.Split('-');
+            int values = Convert.ToInt32(num[0]);//input not in correct format// nu mai inteleg nimic
+            for (int i = 0; i < num.Length; i++)
+            {
+                if (string.IsNullOrEmpty(str))
+                {
+                    Environment.Exit(values);
+                }
+                else
+                {
+                    List<int> numberList = numbers.Distinct().ToList();
+                    if (!numbers.Distinct())//cannot be applied to operand of type List<int> for numberList...nu mai stiu
+                    {
+                        Console.WriteLine("Duplicates");
+                    }
+                }
+
+                numbers.Add(values);
+
+            }
+
+        }
+
+    }*/
+
+    /// <summary>
+    /// Write a program and ask the user to enter a time value in the 24-hour time format (e.g. 19:00).
+    /// A valid time should be between 00:00 and 23:59. If the time is valid, display "Ok"; otherwise, 
+    /// display "Invalid Time". If the user doesn't provide any values, consider it as invalid time. 
+    /// </summary>
+    public class RecapProblem17
+    {
+        public void Problem17()
+        {
+            Console.WriteLine("Write a time value");
+            string date = Console.ReadLine();
+            string date0 = Console.ReadLine();
+            int date1 = Convert.ToInt32(date[0]);
+            int date2 = Convert.ToInt32(date0[0]);
+            int datehour = 23;
+            int datemin = 59;
+            if (date1 <= datehour && date2 <= datemin)
+            {
+                Console.WriteLine($" UTC time {date:HH:mm} = UTC time {date0:HH:mm}" + "Ok");
+            }
+            else
+            {
+                Console.WriteLine("Invalid time");///doesn't work...i don't know..in progress
+            }
+            
+        }
+
+    }
+
+    /// <summary>
+    /// Write a program and ask the user to enter a few words separated by a space. Use the words to 
+    /// create a variable name with PascalCase convention. For example, if the user types: 
+    /// "number of students", display "NumberOfStudents". Make sure the program is not dependent on 
+    /// the casing of the input. So if the input is "NUMBER OF STUDENTS", it should still display 
+    /// "NumberOfStudents". If the user doesn't supply any words, display "Error".
+    /// </summary>
+    public class RecapProblem18
+    {
+        public void Problem18()
+        {
+            Console.WriteLine("Write some words");
+            string str1 = Console.ReadLine();
+            var str2 = str1.TrimEnd().ToLower();
+            Console.WriteLine(str2.Replace(" ",string.Empty));
+            if(str2 == string.Empty)
+            {
+                Console.WriteLine("error");
+            }
+
+        }
+    }
+    /// <summary>
+    /// Write a program and ask the user to enter an English word. Count the number of vowels 
+    /// (a, e, o, u, i) in the word. So, if the user enters "inadequate", the program should display 
+    /// 6 on the console. Make sure the program calculates the number of vowels irrespective of the 
+    /// casing of the word (eg "Inadequate", "inadequate" and "INADEQUATE" all include 6 vowels).
+    /// </summary>
+    public class RecapProblem19
+    {
+        public void Problem19()
+        {
+            var vowels = new HashSet<char> { 'a', 'e', 'i', 'o', 'u' };
+
+            Console.WriteLine("Enter a Sentence");
+            string sentence = Console.ReadLine().ToLower();
+
+            int total = sentence.Count(c => vowels.Contains(c));
+            Console.WriteLine("Your total number of vowels is: {0}", total);
+            
+
+        }
+
+
+    }
 
 }
 
